@@ -1,21 +1,30 @@
 import os
-import time
-from things import choose, admin
-import win32gui
-import win32con
-import win32process
-import keyboard
-import mouse
 import sys as sus # amogus
-import json
-import requests
-import pystray
-import psutil
-import traceback
-from colorama import init, Fore, Back, Style
-import threading
-from PIL import Image
-import subprocess
+try:
+	import time
+	from things import choose, admin
+	import win32gui
+	import win32con
+	import win32process
+	import keyboard
+	import mouse
+	import json
+	import requests
+	import pystray
+	import psutil
+	import traceback
+	from colorama import init, Fore, Back, Style
+	import threading
+	from PIL import Image
+	import subprocess
+except:
+	print('looks like u have missing dependencies! press any key to install')
+	os.system('pause')
+	os.system('python -m pip install -r requirements.txt --user')
+	print('done!')
+	os.system('pause')
+	sus.exit(0)
+
 init()
 
 # required to detect mouse and keyboard events on programs running with admin perms
@@ -39,7 +48,7 @@ except:
 win = win32gui.GetForegroundWindow()
 os.system('title saloading')
 time.sleep(0.5)
-if not any(psutil.Process(win32process.GetWindowThreadProcessId(win)[1]).name() == name for name in ['cmd.exe', 'OpenConsole.exe', 'WindowsTerminal.exe', 'powershell.exe']) or not 'saloading' in win32gui.GetWindowText(win):
+if not any(psutil.Process(win32process.GetWindowThreadProcessId(win)[1]).name() == name for name in ['python.exe', 'cmd.exe', 'OpenConsole.exe', 'WindowsTerminal.exe', 'powershell.exe', 'py.exe']) or not 'saloading' in win32gui.GetWindowText(win):
 	print('keep the cmd window focused while loading thanky')
 	os.system('pause')
 	sus.exit(0)
@@ -341,7 +350,7 @@ if cfg['settings']['check_updates']:
 		if r.json()['latest'] == cfg['settings']['version']:
 			print('up to date')
 		else:
-			print(f'{Fore.GREEN}UPDATE AVAILABLE! go to [insert link here] and download the latest version!')
+			print(f'{Fore.GREEN}UPDATE AVAILABLE! go to https://github.com/P3il4/salad_autostart_plus and download the latest version!')
 			print('...or u can just disable this message in settings')
 			os.system('pause')
 	else:
@@ -360,7 +369,7 @@ while True:
 		print('bye bye')
 		break
 	elif main == 2:
-		os.system('start [insert link here]')
+		os.system('start https://github.com/P3il4/salad_autostart_plus')
 	elif main == 0:
 		try:
 			if cfg['settings']['hide_to_tray']:
