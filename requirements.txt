@@ -1,0 +1,8 @@
+pywin32
+mouse
+keyboard
+pystray
+psutil
+Pillow
+colorama
+requests
