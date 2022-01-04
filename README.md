@@ -13,3 +13,5 @@
 4. wait for dependencies to install
 5. run autostart.py again
 6. done!
+
+todo: turn off geforce experience feature, hide to tray again after clicking "show console"
