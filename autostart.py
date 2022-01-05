@@ -447,7 +447,7 @@ while True:
 							if any(proc.name() == name for name in cfg['kill_processes']):
 								knum += 1
 							if any(proc.name() == name for name in cfg['prevent_processes']):
-								print(f'{Fore.YELLOW}anti afk process running: {proc.name()}')
+								print(f'{Fore.YELLOW}anti afk process running: {proc.name()}') # this disappears
 								timer = cfg["afk_minutes"]*60
 								afkrun = True
 						time.sleep(5)
@@ -456,6 +456,9 @@ while True:
 			checkproc = procs()
 			checkproc.start()
 
+			keyboard.unhook_all()
+			mouse.unhook_all()
+			
 			keyboard.on_press(reset_kb)
 			mouse.hook(reset_ms)
 			while not tray_bye:
