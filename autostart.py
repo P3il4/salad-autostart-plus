@@ -57,7 +57,7 @@ os.chdir(os.path.dirname(__file__))
 os.system('title salad autostart+')
 
 
-version = 1
+version = 2
 
 
 real_print = print
@@ -434,20 +434,24 @@ while True:
 				print(f'{Fore.CYAN}mouse moved: reset timer to {cfg["afk_minutes"]*60} seconds')
 				timer = cfg['afk_minutes']*60
 			stop = threading.Event()
+			antiafk_proc = None
 			class procs(threading.Thread):
 				def __init__(self):
 					threading.Thread.__init__(self)
 				def run(self):
+					global knum
+					global afkrun
+					global timer
+					global antiafk_proc
 					while not stop.is_set():
-						global knum
-						global afkrun
 						knum = 0
 						afkrun = False
+						antiafk_proc = None
 						for proc in psutil.process_iter():
 							if any(proc.name() == name for name in cfg['kill_processes']):
 								knum += 1
 							if any(proc.name() == name for name in cfg['prevent_processes']):
-								print(f'{Fore.YELLOW}anti afk process running: {proc.name()}') # this disappears
+								antiafk_proc = proc.name()
 								timer = cfg["afk_minutes"]*60
 								afkrun = True
 						time.sleep(5)
@@ -458,7 +462,7 @@ while True:
 
 			keyboard.unhook_all()
 			mouse.unhook_all()
-			
+
 			keyboard.on_press(reset_kb)
 			mouse.hook(reset_ms)
 			while not tray_bye:
@@ -469,7 +473,10 @@ while True:
 				print(f'{Fore.LIGHTGREEN_EX}seconds remaining: {timer}')
 				if cfg['settings']['hide_to_tray']: print('\nhiding the process back to tray requires stopping and starting again. maybe ill fix this later')
 				if knum > 0: print(f'{Fore.RED}{knum} active processes will be killed')
-				if not afkrun: print(f'no anti afk processes running')
+				if not afkrun: 
+					print(f'no anti afk processes running')
+				else:
+					print(f'{Fore.YELLOW}anti afk process running: {antiafk_proc}')
 				try:
 					time.sleep(1-(time.time()-delay))
 				except KeyboardInterrupt:
