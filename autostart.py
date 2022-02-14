@@ -345,7 +345,7 @@ s = '    '
 cfg['settings']['version'] = version
 if cfg['settings']['check_updates']:
 	print(f'{Fore.CYAN}checking for updates...')
-	r = requests.get(url='https://fun.shruc.ml/sap/version', timeout=5)
+	r = requests.get(url='https://fun.shruc.omg.lol/sap/version', timeout=5)
 	if r.status_code == 200:
 		if r.json()['latest'] == cfg['settings']['version']:
 			print('up to date')
@@ -416,8 +416,6 @@ while True:
 				icon.notify('look im down here!')
 
 			timer = cfg['afk_minutes']*60
-			# bug: reset prints keep invading the personal space of other prints below
-			# smh not respecting bovid social distancing rules of 1 line
 			# process list only updates every 5 seconds due to cpu going goodbye
 			knum = 0
 			afkrun = False
